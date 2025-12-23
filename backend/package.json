@@ -1,0 +1,20 @@
+{
+  "name": "creator-engagement-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Creator Engagement App",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["creator", "engagement", "social-media"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  }
+}
