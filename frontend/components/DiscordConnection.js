@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Linking
 } from 'react-native';
-import { getDiscordStatus, initDiscordAuth, disconnectDiscord } from '../services/discord';
+import { checkDiscordStatus, getDiscordAuthUrl, disconnectDiscord } from '../services/discord';
 import { Colors, Typography, Spacing, BorderRadius } from '../constants/Theme';
 import { Card, Text, Button } from './ui';
 
@@ -18,13 +18,13 @@ const DiscordConnection = ({ onConnectionChange }) => {
   const [isConnecting, setIsConnecting] = useState(false);
 
   useEffect(() => {
-    checkDiscordStatus();
+    checkConnectionStatus();
   }, []);
 
-  const checkDiscordStatus = async () => {
+  const checkConnectionStatus = async () => {
     try {
       setIsLoading(true);
-      const status = await getDiscordStatus();
+      const status = await checkDiscordStatus();
       setIsConnected(status.connected);
       setUser(status.user);
       
@@ -46,7 +46,7 @@ const DiscordConnection = ({ onConnectionChange }) => {
   const handleConnect = async () => {
     try {
       setIsConnecting(true);
-      const authData = await initDiscordAuth();
+      const authData = await getDiscordAuthUrl();
       
       if (authData.success && authData.authUrl) {
         // Open Discord OAuth in browser
@@ -65,7 +65,7 @@ const DiscordConnection = ({ onConnectionChange }) => {
                   // Note: In a real app, you'd handle the callback differently
                   // This is a simplified version for demonstration
                   setTimeout(() => {
-                    checkDiscordStatus();
+                    checkConnectionStatus();
                   }, 5000);
                 }
               }
@@ -159,7 +159,7 @@ const DiscordConnection = ({ onConnectionChange }) => {
               title="Refresh Status"
               variant="outline"
               size="sm"
-              onPress={checkDiscordStatus}
+              onPress={checkConnectionStatus}
               loading={isLoading}
               style={styles.refreshButton}
             />
